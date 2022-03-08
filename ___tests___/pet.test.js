@@ -58,3 +58,22 @@ describe('walk', () => {
         expect(pet.fitness).toEqual(10);
     });
 });
+
+describe('feed', () => {
+    it('decreases hunger by 3', () => {
+        const pet = new Pet('Fido');
+
+        pet.hunger = 3;
+        pet.feed();
+
+        expect(pet.hunger).toBe(0);
+    })
+    it('hunger should never go below 0', () => {
+        const pet = new Pet('Fido');
+
+        pet.hunger = 2;
+        pet.feed();
+
+        expect(pet.hunger).toBe(0)
+    })
+})
