@@ -100,5 +100,44 @@ describe('checkUp', () => {
         pet.hunger = 5;
 
         expect(pet.checkUp()).toBe('I am hungry AND I need a walk');
+    });
+    it('returns \"I feel great!\" if neither are true', () => {
+        const pet = new Pet('Fido');
+
+        pet.fitness = 4
+        pet.hunger = 4
+
+        expect(pet.checkUp()).toBe('I feel great!')
+    });
+});
+
+describe('isAlive', () => {
+    it('returns false if fitness is 0 or less', () => {
+        const pet = new Pet('Fido');
+
+        pet.fitness = 0;
+
+        expect(pet.isAlive).toBeFalsy();
+    });
+    it('returns false if hunger is 10 or more', () => {
+        const pet = new Pet('Fido');
+
+        pet.hunger = 11;
+
+        expect(pet.isAlive).toBeFalsy();
+    });
+    it('returns false if age is 30 or more', () => {
+        const pet = new Pet('Fido');
+
+        pet.age = 31;
+
+        expect(pet.isAlive).toBeFalsy();
+    });
+    it('returns true if fitness is above 0, hunger is below 10 and age is below 30 ', () => {
+        const pet = new Pet('Fido');
+
+        pet.growUp();
+
+        expect(pet.isAlive).toBeTruthy();
     })
 });
