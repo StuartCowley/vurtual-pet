@@ -25,7 +25,7 @@ class Pet {
           && 
           this.hunger < MAXIMUM_HUNGER 
           && 
-          this.fitness > MINIMUM_FITNESS);git
+          this.fitness > MINIMUM_FITNESS);
     }
 
     growUp () {
