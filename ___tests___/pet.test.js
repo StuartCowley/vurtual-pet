@@ -140,3 +140,19 @@ describe('isAlive', () => {
         expect(pet.isAlive).toBeTruthy();
     });
 });
+
+describe('adoptChild', () => {
+    it('changes the length of the parents children property', () => {
+        const parent = new Pet('Dave');
+
+        parent.adoptChild();
+        expect(parent.children.length).toEqual(1);
+    });
+    it('returns array containing adopted child', () => {
+        const parent = new Pet('Dave');
+        const child = new Pet('Amelia');
+
+        parent.adoptChild(child);
+        expect(parent.children).toStrictEqual([child]);
+    });
+});
