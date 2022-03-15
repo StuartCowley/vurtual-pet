@@ -11,11 +11,11 @@ const MAXIMUM_AGE = 30;
 
 class Pet {
     constructor(name) {
-    this.name = name;
-    this.age = initialAge;
-    this.hunger = initialHunger;
-    this.fitness = initialFitness;
-    this.children = [];
+        this.name = name;
+        this.age = initialAge;
+        this.hunger = initialHunger;
+        this.fitness = initialFitness;
+        this.children = [];
 }
 
     get isAlive () {
