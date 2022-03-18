@@ -1,0 +1,158 @@
+const Pet = require('../src/pet')
+
+describe('constructor', () => {
+    const pet = new Pet('Fido');
+    
+    it('returns an object', () => {
+        expect(new Pet('Fido')).toBeInstanceOf(Object);
+    });
+    it('sets the name property', () => {
+        expect(pet.name).toEqual('Fido');
+    });
+    it('has an initial age of 0', () => {
+        expect(pet.age).toEqual(0);
+    });
+});
+
+describe('growUp', () => {
+    it('increments age by 1', () => {
+        const pet = new Pet('Fido');
+
+        expect(pet.age).toEqual(0);
+        pet.growUp();
+        expect(pet.age).toEqual(1); 
+    });
+    it('increase hunger by 5', () => {
+        const pet = new Pet('Fido');
+
+        expect(pet.hunger).toEqual(0);
+        pet.growUp();
+        expect(pet.hunger).toEqual(5); 
+    });
+    it('decrease fitness by 3', () => {
+        const pet = new Pet('Fido');
+
+        expect(pet.fitness).toEqual(10);
+        pet.growUp();
+        expect(pet.fitness).toEqual(7);
+    });
+    it('throws an error if the pet is not alive', () => {
+        const pet = new Pet('Fido');
+        pet.age = 30;
+
+        expect(() => pet.feed()).toThrow('Your pet is no longer alive :(');
+    });
+});
+
+describe('walk', () => {
+    const pet = new Pet('Fido');
+
+    it('increase fitness by 4', () => {
+        pet.fitness = 4;
+        pet.walk();
+
+        expect(pet.fitness).toEqual(8);
+    });
+    it('fitness level should never go above 10', () => {
+        pet.fitness = 8;
+        pet.walk();
+
+        expect(pet.fitness).toEqual(10);
+    });
+    it('throws an error if the pet is not alive', () => {
+        pet.fitness = 0;
+
+        expect(() => pet.feed()).toThrow('Your pet is no longer alive :(');
+    });
+});
+
+describe('feed', () => {
+    const pet = new Pet('Fido');
+    it('decreases hunger by 3', () => {
+        pet.hunger = 3;
+        pet.feed();
+
+        expect(pet.hunger).toBe(0);
+    })
+    it('hunger should never go below 0', () => {
+        pet.hunger = 2;
+        pet.feed();
+
+        expect(pet.hunger).toBe(0)
+    });
+    it('throws an error if the pet is not alive', () => {
+        pet.hunger = 10;
+
+        expect(() => pet.feed()).toThrow('Your pet is no longer alive :(');
+    });
+});
+
+describe('checkUp', () => {
+    const pet = new Pet('Fido');
+
+    it('returns \"I need a walk\" when fitness is at 3 or less', () => {
+        pet.fitness = 3;
+
+        expect(pet.checkUp()).toBe('I need a walk');
+    });
+    it('returns \"I am hungry\" when hunger is at 5 or less', () => {
+        const pet = new Pet('Fido');
+        pet.hunger = 6;
+
+        expect(pet.checkUp()).toBe('I am hungry');
+    });
+    it('returns \"I am hungry AND I need a walk\" if both above are true', () => {
+        pet.fitness = 3
+        pet.hunger = 5;
+
+        expect(pet.checkUp()).toBe('I am hungry AND I need a walk');
+    });
+    it('returns \"I feel great!\" if neither are true', () => {
+        pet.fitness = 4
+        pet.hunger = 4
+
+        expect(pet.checkUp()).toBe('I feel great!')
+    });
+});
+
+describe('isAlive', () => {
+    const pet = new Pet('Fido');
+
+    it('returns false if fitness is 0 or less', () => {
+        pet.fitness = 0;
+
+        expect(pet.isAlive).toBeFalsy();
+    });
+    it('returns false if hunger is 10 or more', () => {
+        pet.hunger = 11;
+
+        expect(pet.isAlive).toBeFalsy();
+    });
+    it('returns false if age is 30 or more', () => {
+        pet.age = 31;
+
+        expect(pet.isAlive).toBeFalsy();
+    });
+    it('returns true if fitness is above 0, hunger is below 10 and age is below 30 ', () => {
+        const pet = new Pet('Fido');
+        pet.growUp();
+
+        expect(pet.isAlive).toBeTruthy();
+    });
+});
+
+describe('adoptChild', () => {
+    it('changes the length of the parents children property', () => {
+        const parent = new Pet('Dave');
+
+        parent.adoptChild();
+        expect(parent.children.length).toEqual(1);
+    });
+    it('returns array containing adopted child', () => {
+        const parent = new Pet('Dave');
+        const child = new Pet('Amelia');
+
+        parent.adoptChild(child);
+        expect(parent.children).toStrictEqual([child]);
+    });
+});
